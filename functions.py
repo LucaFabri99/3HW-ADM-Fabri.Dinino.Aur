@@ -265,7 +265,7 @@ def visualize_result(df, array):
 
 def heap_top_k(k, array, reverse):
     '''
-    This functions converts an array type object into a heapify structure and return the top-k 
+    This functions converts an array type object into a heapify structure and returns the top-k 
     elements in the array. 
     '''
     heapq.heapify(array) 
