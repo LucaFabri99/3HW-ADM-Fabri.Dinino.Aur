@@ -41,10 +41,14 @@ from itertools import combinations
 ### 1.3 Parse downloaded pages
 
 def string_to_datetime(string):
+    '''
+     This function converts an object of type string to one of type datetime.
+    '''
     return str(datetime.strptime(string, '%B %d, %Y').date())
 
 def darkAtlasScraper(text, filename):
-    
+    '''
+    '''
     soup = BeautifulSoup(text)
     
     scraped = {'placeName': 'NaN',
@@ -162,6 +166,9 @@ def darkAtlasScraper(text, filename):
 
 
 def open_dataset(filename):
+    '''
+    This functions converts a CSV file into a dataframe and initializes its columns.
+    '''
     df = pd.read_csv(filename)
     df = df.iloc[:, :-2]
     df.columns = ['placeName', 'placeTags', 'numPeopleVisited', 'numPeopleWant', 'placeDesc',
@@ -173,6 +180,11 @@ def open_dataset(filename):
 ### 2. Search Engine
 
 def ntlk_analysis(info):
+    '''
+    This function takes as input a string and converts it into a list of words, 
+    removing punctuations and the most common English words from the list and reducing each word 
+    of the list to its stem or root format.
+    '''
     final_words = []
     tokens = word_tokenize(info.lower())
     stop_words = set(stopwords.words("english"))
@@ -187,6 +199,9 @@ def ntlk_analysis(info):
 ### 2.1.1 Create your index!
 
 def open_vocabulary(filename):
+    '''
+    This function converts the contents of a file into a dictionary type object.
+    '''
     vocabulary = {}
     with open(filename, 'r') as file:
         for line in file.readlines():
@@ -197,6 +212,9 @@ def open_vocabulary(filename):
     return vocabulary
             
 def open_inverted_index(filename):
+    '''
+    This function converts the contents of a file into a dictionary type object.
+    '''
     inverted_index = {}
     with open(filename, 'r') as file:
         for line in file.readlines():
@@ -211,7 +229,11 @@ def open_inverted_index(filename):
             
 ### 2.1.2 Execute the query
 
-def search_match(query,df, vocabulary, inverted_index):
+def search_match(query, df, vocabulary, inverted_index):
+    '''
+    This function searches which documents in the dataframe contain all words in the query.
+    It returns a list of indexes, the result of the intersection.
+    '''
     query = ntlk_analysis(query)
     match = {vocabulary[term]: [] for term in query}
 
@@ -228,6 +250,9 @@ def search_match(query,df, vocabulary, inverted_index):
 
 
 def visualize_result(df, array):
+    '''
+    This function allows the visualization of some specific indexes and fields in the dataframe.
+    '''
     result = []
     for index in array:
         series = df[['placeName', 'placeDesc','placeURL']].loc[index]
@@ -239,6 +264,10 @@ def visualize_result(df, array):
 ### 2.2. Conjunctive query & Ranking score
 
 def heap_top_k(k, array, reverse):
+    '''
+    This functions converts an array type object into a heapify structure and return the top-k 
+    elements in the array. 
+    '''
     heapq.heapify(array) 
     if reverse:
         top_k = (heapq.nlargest(k, array, lambda x:-x[1]))
@@ -247,12 +276,16 @@ def heap_top_k(k, array, reverse):
     return top_k
 
 def cosine_similarity(v1,v2):
+    '''
+    '''
     vec1 = np.array(v1)
     vec2 = np.array(v2)
     return np.dot(vec1,vec2)/(np.linalg.norm(vec1)*np.linalg.norm(vec2))
 
 
 def tfidf_search_match(query, df, vocabulary, tfidf_inverted_index, idf, k):
+    '''
+    '''
     result = []
     query = ntlk_analysis(query)
     query_tfidf = {vocabulary[term]: Counter(query)[term]*idf[term]/len(query) for term in query}
@@ -288,9 +321,17 @@ def tfidf_search_match(query, df, vocabulary, tfidf_inverted_index, idf, k):
 ### 3. Define a new score!
 
 def jaccard(list1, list2):
+    '''
+    This function computes the Jaccard index.
+    '''
     return len(set(list1).intersection(list2))/len(set(list1).union(list2))
 
 def new_score_jaccard(query, df, vocabulary, inverted_index, k):
+    '''
+    This function computes a new score of Search Engine based on Jaccard index. 
+    It returns a dataframe consisting of the documents in the dataframe 
+    with the highest score.
+    '''
     intersection = search_match(query, df, vocabulary, inverted_index)
     query = ntlk_analysis(query)
     rank = []
