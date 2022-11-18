@@ -87,6 +87,21 @@ def open_inverted_index(filename):
             
     return inverted_index
 
+def open_inverted_tfidf_index(filename):
+    '''
+    This function converts the contents of a file into a dictionary type object.
+    '''
+    inverted_index = {}
+    with open(filename, 'r') as file:
+        for line in file.readlines():
+            word = int(line.split(':')[0])
+            indexing = line.split(':')[1].strip('\n')
+            indexing = indexing.split(',')
+            if indexing[-1] == ' ':
+                indexing = indexing[:-1]
+            inverted_index[word] = indexing       
+    return inverted_index
+
 def search_match(query, df, vocabulary, inverted_index):
     '''
     This function searches which documents in the dataframe contain all words in the query.
@@ -135,6 +150,7 @@ def heap_top_k(k, array, reverse):
 
 def cosine_similarity(v1,v2):
     '''
+    This function simply compute the cosine similarity from its definition.
     '''
     vec1 = np.array(v1)
     vec2 = np.array(v2)
