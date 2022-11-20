@@ -32,6 +32,8 @@ import dash
 from dash import dcc 
 
 from sklearn.feature_extraction.text import TfidfVectorizer    #Useful already implemented tfidf vectorizer from scikit learn library
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 import heapq                                                   #Library with useful methods to define heap data structures
 
@@ -113,7 +115,10 @@ def search_match(query, df, vocabulary, inverted_index):
     It returns the list of documents indexes, the result of the intersection.
     '''
     query = ntlk_analysis(query)  # pre-process user's query
-    match = {vocabulary[term]: [] for term in query} # return the corresponding id of those terms
+    try:
+        match = {vocabulary[term]: [] for term in query} # return the corresponding id of those terms
+    except KeyError:
+        return None
 
     for key,list_of_values in inverted_index.items():
         if key in match:
@@ -235,3 +240,63 @@ def new_score_jaccard(query, df, vocabulary, inverted_index, k):
         result.append(series)
     
     return pd.DataFrame(result)
+
+def evaluation(dataframe, query, relevant_word, vocabulary, similarityScore, inverted_index, tfidf_inverted_index, idf):
+    matched = search_match(query, dataframe, vocabulary, inverted_index)
+    k = len(matched)
+    matched_tfidf = tfidf_search_match(query, dataframe, vocabulary, tfidf_inverted_index, idf, k)
+    matched_jaccard = new_score_jaccard(query, dataframe, vocabulary, inverted_index, k)
+
+    results = matched_tfidf.merge(matched_jaccard)
+
+    relevant_retrieved = dataframe[dataframe.placeName.str.contains(relevant_word)]
+
+    relevant_index = np.zeros(k)
+    for ind in results.index:
+        if ind in relevant_retrieved.index:
+            relevant_index[ind] = 1
+
+    results['relevance'] = relevant_index
+
+    thresholds = np.linspace(0,1,21)
+    TP = []
+    TN = []
+    FP = []
+    FN = []
+
+    Accuracy = []
+    Precision = []
+    Recall = []
+    F = []
+    for t in np.flip(thresholds):
+        predictions = np.array([0 if y < t else 1 for y in results.similarity_score])
+        matrix = confusion_matrix(predictions, relevant_index)
+
+        TP.append(matrix[1,1])
+        TN.append(matrix[0,0])
+        FP.append(matrix[0,1])
+        FN.append(matrix[1,0])
+
+        Accuracy.append(metrics.accuracy_score(relevant_index, predictions))
+        Precision.append(metrics.precision_score(relevant_index, predictions))
+        Recall.append(metrics.recall_score(relevant_index, predictions))
+        F.append(metrics.f1_score(relevant_index, predictions))
+
+    metr = pd.DataFrame({
+    'Threshold': np.flip(thresholds),
+    'TP': TP,
+    'TN': TN,
+    'FP': FP,
+    'FN': FN,
+    'Accuracy': np.array(Accuracy),
+    'Precision': np.array(Precision),
+    'Recall': np.array(Recall),
+    'F1': np.array(F)
+    })
+
+    norm_tp = np.dot(metr['TP'], 1/max(metr['FN']))
+    norm_fp = np.dot(metr['FP'], 1/max(metr['TN']))
+
+    return metrics.auc(norm_fp, norm_tp)
+
+
