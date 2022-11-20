@@ -6,12 +6,12 @@
 * Luca 
 
 ## HW's goals
-We were asked to create our own dataset by scraping the [Atlas Obscura](https://www.atlasobscura.com/) website, an American online magazine and travel firm, and to focus on the [Most popular places] (https://www.atlasobscura.com/places?sort=likes_count) section.
+We were asked to create our own dataset by scraping the [Atlas Obscura](https://www.atlasobscura.com/) website, an American online magazine and travel firm, and to focus on the [Most popular places](https://www.atlasobscura.com/places?sort=likes_count) section.
 
 The goals of the Homework are:
 
 * be introduced to crawling and parsing of html documents;
-* learn how to create a search engine that whould suggets locations based on the user's query and how to use metrics to evalute its output (such as cosine similarity, tfIdf score and Jaccard similarity);
+* learn how to create a search engine that suggests locations based on the user's query and how to use metrics to evalute its output (such as cosine similarity, tfIdf score and Jaccard similarity);
 * become familiar with the command line;
 * make acquaintance of sorting algorithms.
 
