@@ -18,7 +18,7 @@ In this repository you'll find:
 
 ### 1. `stuff`
 
-#### A folder in which they are loacted some useful files. 
+#### A folder in which they are loacted some useful files which must be loaded if you want to run the code.
 
 ### 2. `main.ipynb`
 
@@ -26,14 +26,17 @@ In this repository you'll find:
 
 ### 2. `scraper.py`
 
-#### The first part of the homework has been runned locally in Leonardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. All the methods implied in this first part are in the **scraper.py** file, and in the *stuff* folder we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations.
+#### The first part of the homework has been runned locally in Leopardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. 
+All the methods implied in this first part are in the **scraper.py** file, and in the *stuff* folder we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations.
 
 ### 3. `engine.py`
 
-#### In this module we can find all the methods involved with the actual implementation of the search engines. So here there are all the metrics we defined, the actual search engine functions and some tools to help loading the data.
+#### In this module we can find all the methods involved with the actual implementation of the search engines. So here there are all the metrics we defined, the actual search engine functions and some tools to help loading the data. In the *stuff* folder we can find **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines.
 
 ### 4. `command_line.sh`
 
 #### A bash shell script file that contains the prepared script to answer to the command line question.
+In the *stuff* folder we can find **CommandLine_result.png**, a screenshot of the result obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
 
 ## Additional link for work visualization
+https://nbviewer.org/github/LucaFabri99/3HW-ADM-Fabri.Dinino.Aur/blob/main/main.ipynb
