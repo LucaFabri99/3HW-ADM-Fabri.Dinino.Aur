@@ -24,8 +24,8 @@ In this repository you'll find:
 ####
 A folder in which they are loacted some useful files which must be loaded if you want to run the code:
 
-* For the scapping part, we can find **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
-* For the search engining part, we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations;
+* For the scapping part, we use **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations;
+* For the search engining part, we use **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
 * For the command line part, we can find **CommandLine_result.png**, a screenshot of the result obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
 
 ### 2. `main.ipynb`
