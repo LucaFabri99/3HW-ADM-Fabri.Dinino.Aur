@@ -18,7 +18,7 @@ In this repository you'll find:
 
 ### 1. `main.ipynb`
 
-#### A folder in which they are loacted some useful files. 
+##### A folder in which they are loacted some useful files. 
 
 ### 2. `main.ipynb`
 
@@ -26,14 +26,14 @@ In this repository you'll find:
 
 ### 2. `scraper.py`
 
-### The first part of the homework has been runned locally in Leonardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. All the methods implied in this first part are in the **scraper.py** file, and in the *stuff* folder we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations.
+#### The first part of the homework has been runned locally in Leonardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. All the methods implied in this first part are in the **scraper.py** file, and in the *stuff* folder we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations.
 
 ### 3. `engine.py`
 
-### Description
+#### Description
 
 ### 4. `command_line.sh`
 
-#### A bash shell script file contains the prepared script to answer to the command line question.
+##### A bash shell script file contains the prepared script to answer to the command line question.
 
 ## Additional link for work visualization
