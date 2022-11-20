@@ -10,10 +10,10 @@ We were asked to create our own dataset by scraping the [Atlas Obscura](https://
 
 The goals of the Homework are:
 
-* be introduced to crawling and parsing of html documents;
-* learn how to create a search engine that suggests locations based on the user's query and how to use metrics to evalute its output (such as cosine similarity, tfIdf score and Jaccard similarity);
-* become familiar with the command line;
-* make acquaintance of sorting algorithms.
+* leaning how to crawl and parse the html documents;
+* learning how to create a search engine that suggests locations based on the user's query and how to use metrics to evalute its output (such as cosine similarity, tfIdf score and Jaccard similarity);
+* becoming familiar with the command line;
+* making acquaintance with the sorting algorithms
 
 ## Files description
 **IMPORTANT:**
@@ -24,7 +24,7 @@ In this repository you'll find:
 ### 1. `stuff`
 
 ####
-A folder in which they are loacted some useful files which must be loaded; these must be loaded if you want to run the code.
+A folder in which are located some useful files; these must be loaded if you want to run the code.
 
 * For the data scapping part, we use **final_dataset.csv**, a dataset we have built with the required information in order to deal with more practical operations;
 * For the search engine part, we use: **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
