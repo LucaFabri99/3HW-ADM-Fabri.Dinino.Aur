@@ -51,6 +51,8 @@ def string_to_datetime(string):
 
 def darkAtlasScraper(text, filename):
     '''
+    This function extracts places' information from the html documents of interest
+    and builds a dictionary of these information for every place we go through.
     '''
     soup = BeautifulSoup(text)
     
@@ -70,29 +72,32 @@ def darkAtlasScraper(text, filename):
                'placeRelatedLists': 'NaN',
                'placeURL': 'NaN'}          
     
+    # Names
     try:
         scraped['placeName'] = soup.find_all('h1',{'class':'DDPage__header-title'})[0].contents[0]
     except IndexError:
         pass
-           
+
+    # Tags       
     try:
         scraped['placeTags'] = list(map(lambda s:s.strip(),
                                         [tag.contents[0] for tag in soup.find_all('a',{'class':'itemTags__link js-item-tags-link'})]))
     except IndexError:
         pass
     
-    
+    # Number of people who have been there 
     counters = soup.find_all('div',{'class':'title-md item-action-count'})
     try:
         scraped['numPeopleVisited'] = int(counters[0].contents[0])
     except IndexError:
         pass
+    # Number of people who want to visit the place
     try:
         scraped['numPeopleWant'] = int(counters[1].contents[0])
     except IndexError:
         pass
     
-
+    # Description      
     place_desc = ''
     for paragraph in soup.find_all('div',{'class':'DDP__body-copy'})[0].find_all('p'):
         for element in paragraph.contents:
@@ -103,11 +108,13 @@ def darkAtlasScraper(text, filename):
                 place_desc += str(element)
     scraped['placeDesc'] = place_desc
     
+    # Short description
     try:
         scraped['placeShortDesc'] = soup.find_all('h3',{'class':'DDPage__header-dek'})[0].contents[0].replace(u'\xa0', u'')
     except IndexError:
         pass
 
+    # Nearby Places
     nearby = []
     try:
         for nearbies in soup.find_all('div',{'class':'DDPageSiderailRecirc__item-text'}):
@@ -116,6 +123,7 @@ def darkAtlasScraper(text, filename):
     except IndexError:
         pass
     
+    # Addresses 
     try:
         address = (str(soup.find_all('aside',{'class':'DDPageSiderail__details'})[0]
                            .find_all('address',{'class':'DDPageSiderail__address'})[0]
@@ -125,11 +133,13 @@ def darkAtlasScraper(text, filename):
     except IndexError:
         pass
     
+    # Latitud and Longitude of the place's location
     coordinates = soup.find_all('div',{'class':'DDPageSiderail__coordinates js-copy-coordinates'})[0].contents[2]
     scraped['placeAlt'] = float(coordinates.split()[0][:-1])
     scraped['placeLong'] = float(coordinates.split()[1])
 
 
+    # The username of the post editors
     editorsoup = soup.find_all('a',{'class':'DDPContributorsList__contributor'})
     scraped['placeEditors'] = [stuff.find_all('span')[0].contents[0] 
                                for stuff in editorsoup 
@@ -147,12 +157,15 @@ def darkAtlasScraper(text, filename):
                                        for editors in editorsoup]
         except IndexError:
             pass
-            
+
+    # Post publishing date     
     try:
         scraped['placePubDate'] = string_to_datetime(soup.find_all('div',{'class':'DDPContributor__name'})[0].contents[0])
     except IndexError:
         pass
 
+    # The names of the lists that the place was included in 
+    # The names of the related places
     kircher = soup.find_all('div',{'class':'athanasius'})
     for piece in kircher:
         for piecer in piece.find_all('div',{'class':'CardRecircSection__title'}):
@@ -163,6 +176,7 @@ def darkAtlasScraper(text, filename):
                 scraped['placeRelatedLists'] =  [re.sub('<[^>]*>', "", str(chunk.contents[1])) 
                                                  for chunk in piece.find_all('h3',{'class':'Card__heading --content-card-v2-title js-title-content'})]
     
+    # The URL of the page of the place
     scraped['placeURL'] = 'https://www.atlasobscura.com/places/' + filename[:-4]
     
     return scraped

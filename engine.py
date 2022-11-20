@@ -41,26 +41,28 @@ from itertools import combinations
 
 ###_____________________SEARCH ENGINE USEFUL METHODS________________________________________________
 
-def ntlk_analysis(info):
+def ntlk_analysis(text):
     '''
-    This function takes as input a string and converts it into a list of words, 
-    removing punctuations and the most common English words from the list and reducing each word 
-    of the list to its stem or root format.
+    This function cleans the text in input, removing puntactions and the most common English words.
+    It returns a list of words reduced to its stem or root format.
     '''
     final_words = []
-    tokens = word_tokenize(info.lower())
+    tokens = word_tokenize(text.lower()) # tokenize the text 
     stop_words = set(stopwords.words("english"))
-    ps = PorterStemmer()
+    ps = PorterStemmer() # stemmer function
     for token in tokens:
-        if token not in stop_words and token.encode().isalpha():
-            stemming_token = ps.stem(token)
+        if token not in stop_words and token.encode().isalpha(): # remove puntactions and 
+                                                                # most common English words
+            stemming_token = ps.stem(token) # reduce words to its root format 
+                                            # through stemmer function
             final_words.append(stemming_token)
             
     return final_words
 
 def open_vocabulary(filename):
     '''
-    This function converts the contents of a file into a dictionary type object.
+    This function receives as input the name of a text file and
+    converts its content into a dictionary type object.
     '''
     vocabulary = {}
     with open(filename, 'r') as file:
@@ -73,7 +75,8 @@ def open_vocabulary(filename):
             
 def open_inverted_index(filename):
     '''
-    This function converts the contents of a file into a dictionary type object.
+    This function receives as input the name of a text file and
+    converts its content into a dictionary type object.
     '''
     inverted_index = {}
     with open(filename, 'r') as file:
@@ -89,7 +92,8 @@ def open_inverted_index(filename):
 
 def open_inverted_tfidf_index(filename):
     '''
-    This function converts the contents of a file into a dictionary type object.
+    This function receives as input the name of a text file and
+    converts its content into a dictionary type object.
     '''
     inverted_index = {}
     with open(filename, 'r') as file:
@@ -104,27 +108,29 @@ def open_inverted_tfidf_index(filename):
 
 def search_match(query, df, vocabulary, inverted_index):
     '''
-    This function searches which documents in the dataframe contain all words in the query.
-    It returns a list of indexes, the result of the intersection.
+    This function finds the common documents in the dataframe which contain 
+    the terms of the user's query.
+    It returns the list of documents indexes, the result of the intersection.
     '''
-    query = ntlk_analysis(query)
-    match = {vocabulary[term]: [] for term in query}
+    query = ntlk_analysis(query)  # pre-process user's query
+    match = {vocabulary[term]: [] for term in query} # return the corresponding id of those terms
 
     for key,list_of_values in inverted_index.items():
         if key in match:
             for value in list_of_values:
                 if value not in match[key]:
-                    match[key].append(value)
+                    match[key].append(value) # find the documents indexes 
+                                            # which contain the terms of the query 
                     
     final_values = list(match.values())
-    intersection = set.intersection(*map(set,final_values))
+    intersection = set.intersection(*map(set,final_values)) # find the common indexes documents
     
     return intersection
 
 
 def visualize_result(df, array):
     '''
-    This function allows the visualization of some specific indexes and fields in the dataframe.
+    This function allows the visualization of some specific indexes and columns in the dataframe.
     '''
     result = []
     for index in array:
@@ -138,19 +144,20 @@ def visualize_result(df, array):
 
 def heap_top_k(k, array, reverse):
     '''
-    This functions converts an array type object into a heapify structure and returns the top-k 
-    elements in the array. 
+    This functions converts an array type object into a heapify structure 
+    and returns the top-k elements in the array. 
+    The "reverse" parameter is a boolean which indicates how the sorting should be done.
     '''
-    heapq.heapify(array) 
+    heapq.heapify(array)  # heapify structure
     if reverse:
-        top_k = (heapq.nlargest(k, array, lambda x:-x[1]))
+        top_k = (heapq.nlargest(k, array, lambda x:-x[1])) # ascending order
     else:
-        top_k = (heapq.nlargest(k, array, lambda x:x[1])) 
+        top_k = (heapq.nlargest(k, array, lambda x:x[1])) # descending order
     return top_k
 
 def cosine_similarity(v1,v2):
     '''
-    This function simply compute the cosine similarity from its definition.
+    This function simply computes the cosine similarity from its definition.
     '''
     vec1 = np.array(v1)
     vec2 = np.array(v2)
@@ -159,6 +166,8 @@ def cosine_similarity(v1,v2):
 
 def tfidf_search_match(query, df, vocabulary, tfidf_inverted_index, idf, k):
     '''
+    This function finds the score of Search Engine based on tfidf value and cosine similarity. 
+    It returns the top-k documents in the dataframe sorted by the highest score.
     '''
     result = []
     query = ntlk_analysis(query)
@@ -182,7 +191,7 @@ def tfidf_search_match(query, df, vocabulary, tfidf_inverted_index, idf, k):
         k_nearest.append((index, cosine_similarity(vec, list(query_tfidf.values()))))
 
         
-    k_nearest = heap_top_k(k, k_nearest, False)
+    k_nearest = heap_top_k(k, k_nearest, False) # find top-k documents
     
     for idx,score in k_nearest:
         series = df[['placeName', 'placeDesc','placeURL']].loc[idx]
@@ -196,15 +205,15 @@ def tfidf_search_match(query, df, vocabulary, tfidf_inverted_index, idf, k):
 
 def jaccard(list1, list2):
     '''
-    This function computes the Jaccard index.
+    This function simply computes the Jaccard similarity from its definition.
     '''
     return len(set(list1).intersection(list2))/len(set(list1).union(list2))
 
+
 def new_score_jaccard(query, df, vocabulary, inverted_index, k):
     '''
-    This function computes a new score of Search Engine based on Jaccard index. 
-    It returns a dataframe consisting of the documents in the dataframe 
-    with the highest score.
+    This function finds a new score of Search Engine based on Jaccard similarity. 
+    It returns the top-k documents in the dataframe sorted by the highest score.
     '''
     intersection = search_match(query, df, vocabulary, inverted_index)
     query = ntlk_analysis(query)
@@ -213,12 +222,12 @@ def new_score_jaccard(query, df, vocabulary, inverted_index, k):
     for idx in intersection:
         if type(df.loc[idx]['placeTags']) == str:
             tags = ntlk_analysis(df.loc[idx]['placeTags'])
-            jaccard_idx = jaccard(tags, query)
+            jaccard_idx = jaccard(tags, query) # compute Jaccard similarity
             rank.append((idx,jaccard_idx))
         else:
             rank.append((idx, -1))
             
-    rank = heap_top_k(k, rank, False)
+    rank = heap_top_k(k, rank, False) # find top-k documents 
     result = []
     for idx,score in rank:
         series = df[['placeName', 'placeDesc','placeURL']].loc[idx]
