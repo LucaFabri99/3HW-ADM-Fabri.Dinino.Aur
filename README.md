@@ -49,7 +49,7 @@ In this module can be found all the methods involved with the actual implementat
 ### 4. `command_line.sh`
 
 #### 
-A bash shell script file that contains code blocks ready to run in order to answer the command line question.
+A bash shell script file that contains the code ready to run in order to answer the command line question.
 
 ## Additional link for work visualization
 https://nbviewer.org/github/LucaFabri99/3HW-ADM-Fabri.Dinino.Aur/blob/main/main.ipynb
