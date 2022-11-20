@@ -16,7 +16,7 @@ We were asked to create our own dataset by scraping the [Atlas Obsura](https://w
 ## Files description
 In this repository you'll find:
 
-### 1. `main.ipynb`
+### 1. `stuff`
 
 ##### A folder in which they are loacted some useful files. 
 
