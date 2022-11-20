@@ -14,12 +14,18 @@ We were asked to create our own dataset by scraping the [Atlas Obsura](https://w
 * make acquaintance of sorting algorithms.
 
 ## Files description
+**NOTE:**
+The first part of the homework has been runned locally in Leopardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. 
 In this repository you'll find:
 
 ### 1. `stuff`
 
 ####
-A folder in which they are loacted some useful files which must be loaded if you want to run the code.
+A folder in which they are loacted some useful files which must be loaded if you want to run the code:
+
+* For the scapping part, we can find **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
+* For the search engining part, we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations;
+* For the command line part, we can find **CommandLine_result.png**, a screenshot of the result obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
 
 ### 2. `main.ipynb`
 
@@ -29,19 +35,17 @@ A Jupyter notebook that contains all our answers and scripts relative to the HW'
 ### 2. `scraper.py`
 
 #### 
-The first part of the homework has been runned locally in Leopardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. 
-All the methods implied in this first part are in the **scraper.py** file, and in the *stuff* folder we can find **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations.
+All the methods implied in this first part are in the **scraper.py** file.
 
 ### 3. `engine.py`
 
 #### 
-In this module we can find all the methods involved with the actual implementation of the search engines. So here there are all the metrics we defined, the actual search engine functions and some tools to help loading the data. In the *stuff* folder we can find **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines.
+In this module we can find all the methods involved with the actual implementation of the search engines. So here there are all the metrics we defined, the actual search engine functions and some tools to help loading the data.
 
 ### 4. `command_line.sh`
 
 #### 
 A bash shell script file that contains the prepared script to answer to the command line question.
-In the *stuff* folder we can find **CommandLine_result.png**, a screenshot of the result obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
 
 ## Additional link for work visualization
 https://nbviewer.org/github/LucaFabri99/3HW-ADM-Fabri.Dinino.Aur/blob/main/main.ipynb
