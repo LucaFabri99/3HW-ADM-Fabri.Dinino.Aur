@@ -16,6 +16,7 @@ We were asked to create our own dataset by scraping the [Atlas Obsura](https://w
 ## Files description
 **IMPORTANT:**
 The first part of the homework has been runned locally in Leopardo's machine. It was about gathering the dataset through some scraping scripts, so following the guidelines we drained the links and then downloaded the HTML and parsed them, targeting some specific information. 
+
 In this repository you'll find:
 
 ### 1. `stuff`
