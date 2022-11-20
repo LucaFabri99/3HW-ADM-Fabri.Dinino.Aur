@@ -18,11 +18,13 @@ In this repository you'll find:
 
 ### 1. `stuff`
 
-#### A folder in which they are loacted some useful files which must be loaded if you want to run the code.
+####
+A folder in which they are loacted some useful files which must be loaded if you want to run the code.
 
 ### 2. `main.ipynb`
 
-#### A Jupyter notebook that contains all our answers and scripts relative to the HW's questions. 
+#### 
+A Jupyter notebook that contains all our answers and scripts relative to the HW's questions. 
 
 ### 2. `scraper.py`
 
