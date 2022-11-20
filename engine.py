@@ -241,7 +241,7 @@ def new_score_jaccard(query, df, vocabulary, inverted_index, k):
     
     return pd.DataFrame(result)
 
-def evaluation(dataframe, query, relevant_word, vocabulary, similarityScore, inverted_index, tfidf_inverted_index, idf):
+def evaluation_cosine(dataframe, query, relevant_word, vocabulary, inverted_index, tfidf_inverted_index, idf):
     matched = search_match(query, dataframe, vocabulary, inverted_index)
     k = len(matched)
     matched_tfidf = tfidf_search_match(query, dataframe, vocabulary, tfidf_inverted_index, idf, k)
@@ -249,7 +249,7 @@ def evaluation(dataframe, query, relevant_word, vocabulary, similarityScore, inv
 
     results = matched_tfidf.merge(matched_jaccard)
 
-    relevant_retrieved = dataframe[dataframe.placeName.str.contains(relevant_word)]
+    relevant_retrieved = results[results.placeName.str.contains(relevant_word)]
 
     relevant_index = np.zeros(k)
     for ind in results.index:
@@ -269,7 +269,65 @@ def evaluation(dataframe, query, relevant_word, vocabulary, similarityScore, inv
     Recall = []
     F = []
     for t in np.flip(thresholds):
-        predictions = np.array([0 if y < t else 1 for y in results.similarity_score])
+        predictions = np.array([0 if y < t else 1 for y in results.cosineSimilarity])
+        matrix = confusion_matrix(predictions, relevant_index)
+
+        TP.append(matrix[1,1])
+        TN.append(matrix[0,0])
+        FP.append(matrix[0,1])
+        FN.append(matrix[1,0])
+
+        Accuracy.append(metrics.accuracy_score(relevant_index, predictions))
+        Precision.append(metrics.precision_score(relevant_index, predictions))
+        Recall.append(metrics.recall_score(relevant_index, predictions))
+        F.append(metrics.f1_score(relevant_index, predictions))
+
+    metr = pd.DataFrame({
+    'Threshold': np.flip(thresholds),
+    'TP': TP,
+    'TN': TN,
+    'FP': FP,
+    'FN': FN,
+    'Accuracy': np.array(Accuracy),
+    'Precision': np.array(Precision),
+    'Recall': np.array(Recall),
+    'F1': np.array(F)
+    })
+
+    norm_tp = np.dot(metr['TP'], 1/max(metr['FN']))
+    norm_fp = np.dot(metr['FP'], 1/max(metr['TN']))
+
+    return metrics.auc(norm_fp, norm_tp)
+
+def evaluation_jaccard(dataframe, query, relevant_word, vocabulary, inverted_index, tfidf_inverted_index, idf):
+    matched = search_match(query, dataframe, vocabulary, inverted_index)
+    k = len(matched)
+    matched_tfidf = tfidf_search_match(query, dataframe, vocabulary, tfidf_inverted_index, idf, k)
+    matched_jaccard = new_score_jaccard(query, dataframe, vocabulary, inverted_index, k)
+
+    results = matched_tfidf.merge(matched_jaccard)
+
+    relevant_retrieved = results[results.placeName.str.contains(relevant_word)]
+
+    relevant_index = np.zeros(k)
+    for ind in results.index:
+        if ind in relevant_retrieved.index:
+            relevant_index[ind] = 1
+
+    results['relevance'] = relevant_index
+
+    thresholds = np.linspace(0,1,21)
+    TP = []
+    TN = []
+    FP = []
+    FN = []
+
+    Accuracy = []
+    Precision = []
+    Recall = []
+    F = []
+    for t in np.flip(thresholds):
+        predictions = np.array([0 if y < t else 1 for y in results.newScore])
         matrix = confusion_matrix(predictions, relevant_index)
 
         TP.append(matrix[1,1])
