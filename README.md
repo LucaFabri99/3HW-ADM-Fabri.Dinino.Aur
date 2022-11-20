@@ -30,7 +30,7 @@ In this repository you'll find:
 
 ### 3. `engine.py`
 
-#### Description
+#### In this module we can find all the methods involved with the actual implementation of the search engines. So here there are all the metrics we defined, the actual search engine functions and some tools to help loading the data.
 
 ### 4. `command_line.sh`
 
