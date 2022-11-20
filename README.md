@@ -6,7 +6,7 @@
 * Luca 
 
 ## HW's goals
-We were asked to create our own dataset by scraping the Atlas Obscura website, an American online magazine and travel firm, catalogues unusual and obscure tourist locations. The goals of the Homework are:
+We were asked to create our own dataset by scraping the [Atlas Obsura](https://www.atlasobscura.com/) website, an American online magazine and travel firm, catalogues unusual and obscure tourist locations. The goals of the Homework are:
 
 * be introduced to crawling and parsing of html documents;
 * learn how to create a search engine that whould suggets locations based on the user's query and how to use metrics to evalute its output (such as cosine similarity, tfIdf score and Jaccard similarity);
