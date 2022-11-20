@@ -26,8 +26,9 @@ In this repository can be found:
 ####
 A folder containing some useful files that  must be loaded in order to run the code.
 
+* For the data scrapping was used **final_dataset.csv**, a dataset we built with the required information in order to deal with more pratical operations;
 * For the search engine were used **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
-* For the command line was produced **CommandLine_result.png**, a screenshot of the results obtained in output;
+* For the command line was used  **final_dataset.tsv** and was produced **CommandLine_result.png**, a screenshot of the results obtained in output;
 * For the heoretical question was produced **TQ_final_output.txt**, a text file which allows a complete and better visualization of the result.
 
 ### 2. `main.ipynb`
