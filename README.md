@@ -24,11 +24,11 @@ In this repository you'll find:
 ### 1. `stuff`
 
 ####
-A folder in which they are loacted some useful files which must be loaded if you want to run the code:
+A folder in which they are loacted some useful files which must be loaded; these must be loaded if you want to run the code.
 
-* For the scapping part, we use **final_dataset.csv**, a dataset we build with the required information in order to deal with more practical operations;
-* For the search engining part, we use **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
-* For the command line part, we can find **CommandLine_result.png**, a screenshot of the result obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
+* For the data scapping part, we use **final_dataset.csv**, a dataset we have built with the required information in order to deal with more practical operations;
+* For the search engine part, we use: **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
+* For the command line part, we can find **CommandLine_result.png**, a screenshot of the results obtained in output, and **final_dataset.tsv**, dataset in tsv format used for the command line.
 
 ### 2. `main.ipynb`
 
@@ -48,7 +48,7 @@ In this module we can find all the methods involved with the actual implementati
 ### 4. `command_line.sh`
 
 #### 
-A bash shell script file that contains the prepared script to answer to the command line question.
+A bash shell script file that contains code ready to answer the command line question.
 
 ## Additional link for work visualization
 https://nbviewer.org/github/LucaFabri99/3HW-ADM-Fabri.Dinino.Aur/blob/main/main.ipynb
