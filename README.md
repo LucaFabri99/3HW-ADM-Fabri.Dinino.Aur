@@ -36,7 +36,7 @@ A Jupyter notebook that contains all our answers and scripts relative to the HW'
 ### 2. `scraper.py`
 
 #### 
-All the methods implied in this first part are in the **scraper.py** file.
+In this module we can find all the methods involved with the actual implementation of the scraping.
 
 ### 3. `engine.py`
 
