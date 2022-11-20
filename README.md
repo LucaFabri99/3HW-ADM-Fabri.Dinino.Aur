@@ -34,6 +34,6 @@ In this repository you'll find:
 
 ### 4. `command_line.sh`
 
-##### A bash shell script file contains the prepared script to answer to the command line question.
+##### A bash shell script file that contains the prepared script to answer to the command line question.
 
 ## Additional link for work visualization
