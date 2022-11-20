@@ -28,7 +28,7 @@ A folder containing some useful files that  must be loaded in order to run the c
 
 * For the data scapping was used **final_dataset.csv**, a dataset we built with the required information in order to deal with more practical operations;
 * For the search engine were used **vocabulary.txt**, **inverted_index.txt** and **tfidf_inverted_index.txt**, the pre-processed documents during search engines;
-* For the command line were produced **CommandLine_result.png**, a screenshot of the results obtained in output, and were used **final_dataset.tsv**, a dataset in tsv format used for the command line.
+* For the command line were produced **CommandLine_result.png**, a screenshot of the results obtained in output, and were used **final_dataset.tsv**, a dataset in tsv format used for the command line;
 * For the heoretical question were produced **TQ_final_output.txt**, in order to allow a better visualization of the result.
 
 ### 2. `main.ipynb`
@@ -49,7 +49,7 @@ In this module can be found all the methods involved with the actual implementat
 ### 4. `command_line.sh`
 
 #### 
-A bash shell script file that contains code ready to run in order to answer the command line question.
+A bash shell script file that contains code blocks ready to run in order to answer the command line question.
 
 ## Additional link for work visualization
 https://nbviewer.org/github/LucaFabri99/3HW-ADM-Fabri.Dinino.Aur/blob/main/main.ipynb
