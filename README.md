@@ -18,7 +18,7 @@ In this repository you'll find:
 
 ### 1. `stuff`
 
-##### A folder in which they are loacted some useful files. 
+#### A folder in which they are loacted some useful files. 
 
 ### 2. `main.ipynb`
 
